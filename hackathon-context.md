@@ -1,25 +1,37 @@
-# ContextOS: Hackathon Global Context (NitroStack Edition)
-**Project Goal**: Build an agentic engineering memory layer within a 24-hour hackathon sprint.
-**Strategy**: "Vibe-coding" via Google Antigravity. 
+# ContextOS - Hackathon Single Source of Truth
+
+**MISSION:** Build an agentic engineering memory layer within 24 hours using a strict "vibe-coding" strategy via Google Antigravity. 
+
+**CRITICAL RULE FOR ALL AI AGENTS:** Do not hallucinate external libraries, architectures, or alternative tech stacks. Stick strictly to the rules defined in this document.
 
 ## 1. Monorepo Architecture (Strictly NitroStack)
-Do not deviate from these paths:
-- `apps/server/`: Backend MCP server using `@nitrostack/core`. NO Express.js or standard HTTP routing.
+The workspace follows a strict monorepo structure. Agents must not deviate from these exact paths:
+- `apps/server/ContextOS/`: Backend MCP server using `@nitrostack/core` (Note the nested folder structure).
 - `apps/web/`: Frontend dashboard using React, Tailwind, and `@nitrostack/widgets`.
-- `packages/shared-types/`: Shared Zod schemas (NitroStack uses Zod natively for tool validation).
+- `packages/shared-types/`: Shared Zod schemas and mock database types.
 
-## 2. The Data (MVP Constraint)
-- We are NOT building a real database connection for this sprint.
-- ALL data must be read from/written to a mock JSON file located at `apps/server/src/mock-data/enterprise-data.json`.
-- The data should be exposed to the AI using NitroStack `@Resource` decorators.
+## 2. Tech Stack & Dependencies
+- **Data Validation:** Zod.
+- **Database:** A mock JSON database named `enterprise-data.json` (No real databases allowed to save hackathon time).
+- **Backend:** NitroStack Core, exposing Model Context Protocol (MCP) Tools.
+- **Frontend:** React, Tailwind CSS, utilizing `@nitrostack/widgets` for pre-built UI components.
 
-## 3. The Agent Pipeline (MCP Native)
-Agents must be built as NitroStack Tools. 
-1. **Planner**: An `@Tool` that takes user input and outputs a structured plan.
-2. **Retriever**: An `@Tool` that fetches required ContextNodes from the mock JSON.
-3. **Context Builder**: An `@Tool` that formats the retrieved data into a final prompt.
+## 3. Team Tracks & Isolation Protocol
+Four teammates (A, B, C, D) are executing parallel tracks on synchronized machines. To prevent merge conflicts and Git nightmares, agents must **ONLY** modify files within their assigned track's directory. 
 
-## 4. Antigravity AI Rules
-- Strictly use the NitroStack SDK and its decorator-driven architecture.
-- Do not invent new directories. 
-- Write complete, functional code. No `// TODO: implement this later` comments.
+*   **Track 1: Foundation (Teammate A)**
+    *   **Directory:** `packages/shared-types/`
+    *   **Goal:** Build the unified Zod schemas and `enterprise-data.json`. This is the core data blocker for all other tracks. 
+*   **Track 2: The Brain (Teammate B)**
+    *   **Directory:** `apps/server/ContextOS/src/agents/`
+    *   **Goal:** Write pure TypeScript logic for the Planner, Retriever, and Context Builder functions.
+*   **Track 3: The Plumber (Teammate C)**
+    *   **Directory:** `apps/server/ContextOS/src/index.ts`
+    *   **Goal:** Build the NitroStack server, wrapping Track 2's logic into exposed `@Tool` endpoints.
+*   **Track 4: Web Wizard (Teammate D)**
+    *   **Directory:** `apps/web/`
+    *   **Goal:** Build the React/Tailwind frontend, initially using hardcoded data, eventually routing live MCP data via NitroStack widgets.
+
+## 4. Execution Rhythm
+- **Push-Pull Rhythm:** Track 1 merges first. Tracks 2, 3, and 4 must immediately pull Track 1's Zod schemas into their local environments to sync their AI agents. Track 2 hands off to Track 3. Track 4 consumes Track 3.
+- **No Overwrites:** Never edit a file outside your assigned track directory. Trust the boundaries.
